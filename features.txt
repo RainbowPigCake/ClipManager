@@ -1,0 +1,32 @@
+use a framework to build good user interface with good performance (preferably not python, too many projects in python, OOP)
+
+classes
+Clip (singular clip with video, length, size, name, date)
+Grid (many videos in a grid, has many clips)
+ClipFolderManager (main class that brings everything together)
+
+choose folder path for clip directory (type in path or choose folder location with windows explorer)
+view videos in a grid (each clip is a rectangle with a thumbnail, shows name date length size)
+adjust the width of the grid (number of videos per row)
+preview video when clicked on (video player with options)
+when previewing a video, the video is highlighted on the grid
+move left and right between clips from the grid while previewing
+accept most common video formats (.mp4, .DVR,... more)
+trim videos (choose a new start and end point of a clip)
+include only chosen subsections of video (more advanced trim)
+stretch back to native/target resolution (example playing csgo stretched 1280 960 -> 1920 1080)
+rename videos (refresh directory after this)
+delete clips (should delete locally and in the folder, don't need to refresh)
+favourite clips (useful for showing important clips)
+show favourite clips (this will show an extra grid on top with only the favourite clips, will not affect the primary grid)
+search clip by name (contains query)
+search clip by date (during, before inclusive, after inclusive)
+sort clips by size (useful for seeing which clips take up the most space)
+sort clips by name (not the most useful unless the file naming convention includes a name)
+sort clips by date (see most recent, very useful)
+after clicking on a video to preview, the scroll position is kept on exit (quality of life consideration)
+colour themes (need good framework that makes this easy to do with palettes)
+add clips to group/tag/label (organization feature)
+organize into groups button (many grids of clips, might not implement this)
+
+need to think of when to refresh the clip viewer grid (annoying when you need to click a refresh button often) 
