@@ -1,0 +1,11 @@
+.clip-title {
+  font: 16px Calibri, serif;
+  font-weight: bold;
+  color: #f7f7f7;
+  text-align: left;
+}
+.clip-thumbnail {
+  width: 400px;
+  height: 225px;
+  border-radius: 5px;
+}

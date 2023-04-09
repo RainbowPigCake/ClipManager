@@ -41,8 +41,8 @@
         "fullscreen": false,
         "resizable": true,
         "title": "clip-manager",
-        "width": 800,
-        "height": 600
+        "width": 1280,
+        "height": 720
       }
     ]
   }
