@@ -1,28 +1,6 @@
 .list-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-auto-rows: 275px;
-  gap: 35px;
-  background: #496696;
-  padding: 10px;
-}
-
-.list-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: transparent;
-  padding: 10px;
-  text-align: center;
-  width: 400px;
-  height: 275px;
-  border-radius: 10px;
-}
-
-.list-item:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  transition: 0.25s;
-  box-shadow: 0 0 25px white;
-  color: white;
-  cursor: pointer;
+  grid-template-columns: repeat(auto-fit, minmax(301px, 1fr));
+  background: #1D283E;
+  justify-items: center;
 }

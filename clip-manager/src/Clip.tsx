@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
-import Box from '@mui/material/Box'
+import path from 'path'
 import './Clip.css'
-export default function Clip({ file }) {
+
+export default function Clip({ filePath }) {
+  const parsedPath = filePath.split(/[/\\]/).pop()
   return (
     <>
-      <img
-        className="clip-thumbnail"
-        src="https://cdn.discordapp.com/attachments/982835971458486322/1094441933146968144/manatee-oof.png"
-      />
-      <div className="clip-title">{file}</div>
+      <div className="clip-item">
+        <img
+          className="clip-thumbnail"
+          src="https://media.discordapp.net/attachments/982835971458486322/1174881299014619136/image.png"
+        />
+        <div className="clip-title">{parsedPath}</div>
+      </div>
     </>
   )
 }

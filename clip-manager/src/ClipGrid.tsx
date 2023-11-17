@@ -15,8 +15,8 @@ export default function ClipGrid({ clips }) {
   return (
     <div className="list-container">
       {clips.map((clip: any) => (
-        <div key={clip.id} className="list-item" onClick={handleClipOnClick}>
-          <Clip key={clip.id} file={clip.path} />
+        <div key={clip.id} onClick={handleClipOnClick}>
+          <Clip key={clip.id} filePath={clip.path} />
         </div>
       ))}
     </div>
