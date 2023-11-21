@@ -16,6 +16,14 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "protocol": {
+        "all": true,
+        "asset": true,
+        "assetScope": ["**"]
+      },
+      "fs": {
+        "scope": ["**"]
       }
     },
     "bundle": {
@@ -31,7 +39,7 @@
       "targets": "all"
     },
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; media-src 'self' asset: https://asset.localhost;"
     },
     "updater": {
       "active": false

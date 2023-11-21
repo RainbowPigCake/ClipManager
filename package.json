@@ -1,6 +1,5 @@
 {
-    "scripts": {
-      "start": "yarn --cwd ./clip-manager run tauri dev"
-    }
+  "scripts": {
+    "start": "yarn --cwd ./clip-manager run tauri dev"
+  }
 }
-  
