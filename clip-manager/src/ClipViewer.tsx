@@ -11,7 +11,13 @@ export default function ClipViewer() {
   return (
     <>
       <div>{decodeURI(file)}</div>
-      <ReactPlayer playing url={[{ src: clipURI, type: 'video/mp4' }] } />
+      <ReactPlayer
+        playing
+        url={[{ src: clipURI, type: 'video/mp4' }]}
+        width={1200}
+        height={675}
+        controls
+      />
     </>
   )
 }

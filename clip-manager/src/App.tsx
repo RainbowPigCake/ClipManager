@@ -22,6 +22,7 @@ function App() {
   }, [])
 
   const refreshClips = (dir) => {
+    console.log("Refreshing Clips!")
     invoke('get_clip_file_paths', {
       directory: dir,
     }).then((res) => {
