@@ -1,5 +1,5 @@
 # ClipManager
-An app that I am working on that will replace apps like medal.tv or supplement OBS Replay Buffer
+An app that I am working on that will replace apps like medal.tv or supplement OBS Replay Buffer and ShadowPlay
 
 # Tech Stack
 * Using tauri for performance and memory purposes (and I want to learn rust :D)
