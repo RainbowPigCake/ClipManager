@@ -1,29 +1,39 @@
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import Clip from './Clip'
+import SearchBar from './SearchBar'
 import './ClipGrid.css'
+import { invoke } from '@tauri-apps/api'
 
-interface ClipGridProps {
-  clips: Array<{ id: string; path: string }>
+interface Clip {
+  id: string
+  path: string
 }
 
-export default function ClipGrid({ clips, onRefresh }) {
-  const folderPathRef = useRef("")
+export default function ClipGrid({}) {
+  let [clips, setClips] = useState([])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onRefresh(folderPathRef.current.value)
+  useEffect(() => {
+    console.log("test")
+    refreshClips('')
+  }, [])
+
+  const refreshClips = (dir) => {
+    console.log('Refreshing Clips!')
+    invoke('get_clip_file_paths', {
+      directory: dir,
+    }).then((res) => {
+      setClips([])
+      res.map((path) => {
+        setClips((prevClips) => {
+          return [...prevClips, { id: crypto.randomUUID(), path: path }]
+        })
+      })
+    })
   }
+
   return (
     <>
-      <div className="search">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Enter Folder Path:
-            <input type="text" name="name" ref={folderPathRef} />
-          </label>
-          <input type="submit" name="submit" />
-        </form>
-      </div>
+      <SearchBar onRefresh={refreshClips}/>
       <div className="list-container">
         {clips.map((clip) => (
           <div key={clip.id}>
