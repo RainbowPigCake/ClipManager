@@ -13,8 +13,7 @@ export default function ClipGrid({}) {
   let [clips, setClips] = useState([])
 
   useEffect(() => {
-    console.log("test")
-    refreshClips('')
+    // refreshClips('')
   }, [])
 
   const refreshClips = (dir) => {
