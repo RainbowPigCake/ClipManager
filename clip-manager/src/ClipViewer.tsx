@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { appDataDir, join } from '@tauri-apps/api/path'
 import { convertFileSrc } from '@tauri-apps/api/tauri'
 import ReactPlayer from 'react-player'
@@ -8,11 +8,13 @@ export default function ClipViewer() {
   const { file } = useParams()
   const clipURI = convertFileSrc(decodeURI(file))
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { state } = location
 
   const changeRoute = () => {
     let path = `/`
-    navigate(path)
+    navigate(path, { state })
   }
   useEffect(() => {
     console.log('Rendering ClipViewer!')

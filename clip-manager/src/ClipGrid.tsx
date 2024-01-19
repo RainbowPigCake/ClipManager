@@ -3,17 +3,14 @@ import Clip from './Clip'
 import SearchBar from './SearchBar'
 import './ClipGrid.css'
 import { invoke } from '@tauri-apps/api'
-
-interface Clip {
-  id: string
-  path: string
-}
+import { useLocation } from 'react-router-dom'
 
 export default function ClipGrid({}) {
-  let [clips, setClips] = useState([])
+  const [clips, setClips] = useState([])
+  const state = useLocation()
 
   useEffect(() => {
-    // refreshClips('')
+    setClips(state.state.clips)
   }, [])
 
   const refreshClips = (dir) => {
@@ -30,13 +27,22 @@ export default function ClipGrid({}) {
     })
   }
 
+  const saveClipGridState = (filePath, navigate) => {
+    let path = `/view/${encodeURI(filePath)}`
+    navigate(path, { state: { clips } })
+  }
+
   return (
     <>
-      <SearchBar onRefresh={refreshClips}/>
+      <SearchBar onRefresh={refreshClips} />
       <div className="list-container">
         {clips.map((clip) => (
           <div key={clip.id}>
-            <Clip key={clip.id} filePath={clip.path} />
+            <Clip
+              key={clip.id}
+              filePath={clip.path}
+              saveClipGridState={saveClipGridState}
+            />
           </div>
         ))}
       </div>

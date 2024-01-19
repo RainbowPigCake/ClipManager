@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import './Clip.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function Clip({ filePath }) {
+export default function Clip({ filePath, saveClipGridState }) {
   const parsedPath = filePath.split(/[/\\]/).pop()
 
   let navigate = useNavigate()
 
   const changeRoute = () => {
-    let path = `/view/${encodeURI(filePath)}`
-    navigate(path)
+    saveClipGridState(filePath, navigate)
   }
 
   return (

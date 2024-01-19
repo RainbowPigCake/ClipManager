@@ -1,17 +1,9 @@
 import { useState, useEffect } from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  useLocation,
-  Routes,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import ClipGrid from './ClipGrid'
 import ClipViewer from './ClipViewer'
 
-
-
 function App() {
-
   return (
     <>
       <Router>
