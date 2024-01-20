@@ -10,7 +10,9 @@ export default function ClipGrid({}) {
   const state = useLocation()
 
   useEffect(() => {
-    setClips(state.state.clips)
+    if (state.state !== null) {
+      setClips(state.state.clips)
+    }
   }, [])
 
   const refreshClips = (dir) => {
