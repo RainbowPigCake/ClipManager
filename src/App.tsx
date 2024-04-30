@@ -4,9 +4,11 @@ import ClipViewer from "./ClipViewer";
 
 function App() {
   const [viewingClipPath, setViewingClipPath] = useState(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleClipClick = (clipName) => {
     if (!viewingClipPath) {
+      setScrollPosition(window.pageYOffset);
       setViewingClipPath(clipName);
     }
   };
@@ -16,9 +18,10 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(viewingClipPath);
-    console.log(!viewingClipPath);
-  }, [viewingClipPath]);
+    if (!viewingClipPath) {
+      window.scrollTo(0, scrollPosition);
+    }
+  }, [viewingClipPath, scrollPosition]);
 
   return (
     <>
