@@ -1,12 +1,18 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from "react";
 
 export default function SearchBar({ onRefresh }) {
-  const folderPathRef = useRef('')
+  const folderPathRef = useRef("");
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    onRefresh(folderPathRef.current.value)
-  }
+    e.preventDefault();
+    onRefresh(folderPathRef.current.value);
+  };
+
+  // for developing purposes
+  useEffect(() => {
+    onRefresh("C:\\files\\LowkeyClips2");
+  }, []);
+
   return (
     <>
       <div className="search">
@@ -19,5 +25,5 @@ export default function SearchBar({ onRefresh }) {
         </form>
       </div>
     </>
-  )
+  );
 }

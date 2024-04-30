@@ -1,19 +1,36 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import ClipGrid from './ClipGrid'
-import ClipViewer from './ClipViewer'
+import { useState, useEffect } from "react";
+import ClipGrid from "./ClipGrid";
+import ClipViewer from "./ClipViewer";
 
 function App() {
+  const [viewingClipPath, setViewingClipPath] = useState(null);
+
+  const handleClipClick = (clipName) => {
+    if (!viewingClipPath) {
+      setViewingClipPath(clipName);
+    }
+  };
+
+  const handleBackViewer = () => {
+    setViewingClipPath(null);
+  };
+
+  useEffect(() => {
+    console.log(viewingClipPath);
+    console.log(!viewingClipPath);
+  }, [viewingClipPath]);
+
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<ClipGrid/>} />
-          <Route path="/view/:file" element={<ClipViewer></ClipViewer>} />
-        </Routes>
-      </Router>
+      {!!viewingClipPath && (
+        <ClipViewer onBack={handleBackViewer} clipFilePath={viewingClipPath} />
+      )}
+      <ClipGrid
+        handleClickClip={handleClipClick}
+        isVisible={!viewingClipPath}
+      />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
