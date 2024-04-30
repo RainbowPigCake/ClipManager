@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Clip from './Clip'
 import SearchBar from './SearchBar'
+import Record from './Record'
+
 import './ClipGrid.css'
 import { invoke } from '@tauri-apps/api'
 import { useLocation } from 'react-router-dom'
@@ -36,7 +38,10 @@ export default function ClipGrid({}) {
 
   return (
     <>
-      <SearchBar onRefresh={refreshClips} />
+      <div className="topPanel">
+        <SearchBar onRefresh={refreshClips} />
+        <Record />
+      </div>
       <div className="list-container">
         {clips.map((clip) => (
           <div key={clip.id}>

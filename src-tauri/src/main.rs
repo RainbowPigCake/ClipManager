@@ -11,7 +11,9 @@ fn get_clip_file_paths(directory: &str) -> Result<Vec<String>, String> {
         clip_paths.push(path.unwrap().path().into_os_string().into_string().unwrap());
     }
     Ok(clip_paths)
-}
+}   
+
+
 
 fn main() {
     tauri::Builder

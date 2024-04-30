@@ -1,6 +1,11 @@
 .list-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(301px, 1fr));
-  background: #1D283E;
+  background: #1d283e;
   justify-items: center;
+}
+
+.topPanel {
+  display: flex;
+  justify-content: space-evenly;
 }
