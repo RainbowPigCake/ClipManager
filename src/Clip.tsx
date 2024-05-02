@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./index.css";
 
+const maxStrLengthTitle = 31;
+
 export default function Clip({ filePath, handleClickClip }) {
   const parsedPath = filePath.split(/[/\\]/).pop();
 
@@ -15,8 +17,8 @@ export default function Clip({ filePath, handleClickClip }) {
           src="https://cdn.discordapp.com/attachments/982835971458486322/1234710593340964905/image.png?ex=6631b959&is=663067d9&hm=ba1d114998edf3b3afc3b00eb1510c1e67069c9716d0029f766d49e98271f60a&"
         />
         <div className="text-left font-bold text-white text-base font-inter">
-          {parsedPath.length > 31
-            ? parsedPath.slice(0, 31 - 3) + "..."
+          {parsedPath.length > maxStrLengthTitle
+            ? parsedPath.slice(0, maxStrLengthTitle - 3) + "..."
             : parsedPath}
         </div>
       </div>
