@@ -6,7 +6,7 @@ import "./index.css";
 import "./ClipGrid.css";
 import { invoke } from "@tauri-apps/api";
 
-export default function ClipGrid({ handleClickClip, isVisible, scrollPosition}) {
+export default function ClipGrid({ handleClickClip, isVisible }) {
   const [clips, setClips] = useState([]);
   const clipGridRef = useRef(null);
 
@@ -14,14 +14,19 @@ export default function ClipGrid({ handleClickClip, isVisible, scrollPosition}) 
     console.log("Refreshing Clips!");
     invoke("get_clip_file_paths", {
       directory: dir,
-    }).then((res) => {
-      setClips([]);
-      res.forEach((path) => {
-        setClips((prevClips) => {
-          return [...prevClips, { id: crypto.randomUUID(), path: path }];
+    })
+      .then((res) => {
+        setClips([]);
+        res.forEach((path) => {
+          setClips((prevClips) => {
+            return [...prevClips, { id: crypto.randomUUID(), path: path }];
+          });
         });
+      })
+      .catch((err) => {
+        console.log(`${err}`);
+        setClips([]);
       });
-    });
   };
 
   return (
