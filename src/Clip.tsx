@@ -14,7 +14,7 @@ export default function Clip({ filePath, handleClickClip }) {
       >
         <img
           className="w-276 rounded-lg h-155"
-          src="https://cdn.discordapp.com/attachments/982835971458486322/1234710593340964905/image.png?ex=6631b959&is=663067d9&hm=ba1d114998edf3b3afc3b00eb1510c1e67069c9716d0029f766d49e98271f60a&"
+          src="https://cdn.discordapp.com/attachments/982835971458486322/1240389613072420964/7da6f32c-6682-4aa0-b0f2-2e99589d7287-1711871401481.jpg?ex=66466259&is=664510d9&hm=97915057684bc26ff6a571ac8a3ce2170fc0c1fc1db235a4616162440ed2f3a4&"
         />
         <div className="text-left font-bold text-white text-base font-inter">
           {parsedPath.length > maxStrLengthTitle
