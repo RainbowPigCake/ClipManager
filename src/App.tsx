@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import ClipGrid from "./ClipGrid";
-import ClipViewer from "./ClipViewer";
+import { useState, useEffect } from 'react';
+import ClipGrid from './ClipGrid';
+import ClipViewer from './ClipViewer';
 
 function App() {
   const [viewingClipPath, setViewingClipPath] = useState(null);

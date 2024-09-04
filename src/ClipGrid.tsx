@@ -1,18 +1,18 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
-import Clip from "./Clip";
-import SearchBar from "./SearchBar";
-import Record from "./Record";
-import "./index.css";
-import "./ClipGrid.css";
-import { invoke } from "@tauri-apps/api";
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import Clip from './Clip';
+import SearchBar from './SearchBar';
+import Record from './Record';
+import './index.css';
+import './ClipGrid.css';
+import { invoke } from '@tauri-apps/api';
 
 export default function ClipGrid({ handleClickClip, isVisible }) {
   const [clips, setClips] = useState([]);
   const clipGridRef = useRef(null);
 
   const refreshClips = (dir) => {
-    console.log("Refreshing Clips!");
-    invoke("get_clip_file_paths", {
+    console.log('Refreshing Clips!');
+    invoke('get_clip_file_paths', {
       directory: dir,
     })
       .then((res) => {
@@ -31,7 +31,7 @@ export default function ClipGrid({ handleClickClip, isVisible }) {
 
   return (
     <>
-      <div className={`${isVisible ? "block" : "hidden"}`} ref={clipGridRef}>
+      <div className={`${isVisible ? 'block' : 'hidden'}`} ref={clipGridRef}>
         <div className="topPanel">
           <SearchBar onRefresh={refreshClips} />
           <Record />
