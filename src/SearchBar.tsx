@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
 
 export default function SearchBar({ onRefresh }) {
-  const folderPathRef = useRef("");
+  const folderPathRef = useRef('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,7 +10,7 @@ export default function SearchBar({ onRefresh }) {
 
   // for developing purposes
   useEffect(() => {
-    onRefresh("C:\\files\\LowkeyClips2");
+    onRefresh('C:\\files\\LowkeyClips2');
   }, []);
 
   return (
