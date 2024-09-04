@@ -13,7 +13,7 @@ export default function Clip({ filePath, handleClickClip }) {
         onClick={() => handleClickClip(filePath)}
       >
         <img className="rounded-md object-scale-down w-[276px] h-[155px] mb-1"
-          src="https://cdn.discordapp.com/attachments/982835971458486322/1240389613072420964/7da6f32c-6682-4aa0-b0f2-2e99589d7287-1711871401481.jpg?ex=66466259&is=664510d9&hm=97915057684bc26ff6a571ac8a3ce2170fc0c1fc1db235a4616162440ed2f3a4&"
+          src="https://media.discordapp.net/attachments/1279640411236991090/1280609307070697564/IMG_20240903_142316.jpg?ex=66d8b3db&is=66d7625b&hm=3afc5dc77bf6957a0a5164a9e3889ed208dc16641457003458d999d0e7cf611e&=&format=webp&width=507&height=676"
         />
         <div className="text-left font-bold text-white text-base font-inter">
           {parsedPath.length > maxStrLengthTitle
