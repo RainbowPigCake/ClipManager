@@ -38,13 +38,11 @@ export default function ClipGrid({ handleClickClip, isVisible }) {
         </div>
         <div className="list-container">
           {clips.map((clip) => (
-            <div key={clip.id}>
-              <Clip
-                key={clip.id}
-                filePath={clip.path}
-                handleClickClip={handleClickClip}
-              />
-            </div>
+            <Clip
+              key={clip.id}
+              filePath={clip.path}
+              handleClickClip={handleClickClip}
+            />
           ))}
         </div>
       </div>
