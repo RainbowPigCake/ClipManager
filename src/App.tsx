@@ -26,13 +26,18 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      {!!viewingClipPath && (
-        <ClipViewer onBack={handleBackViewer} clipFilePath={viewingClipPath} />
-      )}
-      <ClipGrid
-        handleClickClip={handleClipClick}
-        isVisible={!viewingClipPath}
-      />
+      <div className="bg-background text-foreground">
+        {!!viewingClipPath && (
+          <ClipViewer
+            onBack={handleBackViewer}
+            clipFilePath={viewingClipPath}
+          />
+        )}
+        <ClipGrid
+          handleClickClip={handleClipClick}
+          isVisible={!viewingClipPath}
+        />
+      </div>
     </ThemeProvider>
   );
 }
