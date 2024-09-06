@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
-import { Card, CardHeader, CardContent, CardTitle } from './components/ui/card';
+import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
+
 const maxStrLengthTitle = 31;
 
 export default function Clip({ filePath, handleClickClip }) {
