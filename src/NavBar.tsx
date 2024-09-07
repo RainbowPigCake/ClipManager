@@ -1,4 +1,3 @@
-import React from 'react';
 import { Feather, Settings, ArrowLeft } from 'lucide-react';
 import { Button } from './components/ui/button';
 import {
