@@ -30,22 +30,17 @@ export default function ClipGrid({ handleClickClip, isVisible }) {
   };
 
   return (
-    <>
-      <div className={`${isVisible ? 'block' : 'hidden'}`} ref={clipGridRef}>
-        <div className="topPanel">
-          <SearchBar onRefresh={refreshClips} />
-          <Record />
-        </div>
-        <div className="list-container">
-          {clips.map((clip) => (
-            <Clip
-              key={clip.id}
-              filePath={clip.path}
-              handleClickClip={handleClickClip}
-            />
-          ))}
-        </div>
+    <div className={`${isVisible ? 'block' : 'hidden'}`} ref={clipGridRef}>
+      <SearchBar onRefresh={refreshClips} />
+      <div className="list-container">
+        {clips.map((clip) => (
+          <Clip
+            key={clip.id}
+            filePath={clip.path}
+            handleClickClip={handleClickClip}
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 }

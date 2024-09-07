@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ClipGrid from './ClipGrid';
 import ClipViewer from './ClipViewer';
 import { ThemeProvider } from '@/components/theme-provider';
+import NavBar from './NavBar';
 
 function App() {
   const [viewingClipPath, setViewingClipPath] = useState(null);
@@ -26,13 +27,21 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      {!!viewingClipPath && (
-        <ClipViewer onBack={handleBackViewer} clipFilePath={viewingClipPath} />
-      )}
-      <ClipGrid
-        handleClickClip={handleClipClick}
-        isVisible={!viewingClipPath}
-      />
+      <div className="flex flex-row bg-background text-foreground">
+        <NavBar />
+        {!!viewingClipPath && (
+          <ClipViewer
+            onBack={handleBackViewer}
+            clipFilePath={viewingClipPath}
+          />
+        )}
+        <div className="flex-grow">
+          <ClipGrid
+            handleClickClip={handleClipClick}
+            isVisible={!viewingClipPath}
+          />
+        </div>
+      </div>
     </ThemeProvider>
   );
 }

@@ -3,8 +3,3 @@
   grid-template-columns: repeat(auto-fit, minmax(301px, 1fr));
   justify-items: center;
 }
-
-.topPanel {
-  display: flex;
-  justify-content: space-evenly;
-}
