@@ -8,7 +8,7 @@ export default function SearchBar({ onRefresh }) {
     onRefresh(folderPathRef.current.value);
   };
 
-  // for developing purposes
+  // TODO: remove this. for developing purposes
   useEffect(() => {
     onRefresh('C:\\files\\LowkeyClips2');
   }, []);
