@@ -28,14 +28,16 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex flex-row bg-background text-foreground">
-        <NavBar />
+        <div className="fixed">
+          <NavBar />
+        </div>
         {!!viewingClipPath && (
           <ClipViewer
             onBack={handleBackViewer}
             clipFilePath={viewingClipPath}
           />
         )}
-        <div className="flex-grow">
+        <div className="flex-grow ml-24">
           <ClipGrid
             handleClickClip={handleClipClick}
             isVisible={!viewingClipPath}
