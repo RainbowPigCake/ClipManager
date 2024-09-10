@@ -32,10 +32,12 @@ function App() {
           <NavBar />
         </div>
         {!!viewingClipPath && (
-          <ClipViewer
-            onBack={handleBackViewer}
-            clipFilePath={viewingClipPath}
-          />
+          <div className="ml-24">
+            <ClipViewer
+              onBack={handleBackViewer}
+              clipFilePath={viewingClipPath}
+            />
+          </div>
         )}
         <div className="flex-grow ml-24">
           <ClipGrid
