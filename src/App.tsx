@@ -29,14 +29,11 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex flex-row bg-background text-foreground">
         <div className="fixed">
-          <NavBar />
+          <NavBar funcs={{ back: handleBackViewer }} />
         </div>
         {!!viewingClipPath && (
           <div className="ml-24">
-            <ClipViewer
-              onBack={handleBackViewer}
-              clipFilePath={viewingClipPath}
-            />
+            <ClipViewer clipFilePath={viewingClipPath} />
           </div>
         )}
         <div className="flex-grow ml-24">

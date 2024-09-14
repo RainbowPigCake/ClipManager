@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { appDataDir, join } from '@tauri-apps/api/path';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
 import ReactPlayer from 'react-player';
 
-export default function ClipViewer({ onBack, clipFilePath }) {
+export default function ClipViewer({ clipFilePath }) {
   const clipURI = convertFileSrc(decodeURI(clipFilePath));
 
   useEffect(() => {
@@ -12,7 +11,6 @@ export default function ClipViewer({ onBack, clipFilePath }) {
   return (
     <>
       <div>
-        <button onClick={onBack}>← Back</button>
         <div>{decodeURI(clipFilePath)}</div>
         <ReactPlayer
           playing
