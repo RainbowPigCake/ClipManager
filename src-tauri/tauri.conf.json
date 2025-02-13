@@ -20,7 +20,7 @@
       "protocol": {
         "all": true,
         "asset": true,
-        "assetScope": ["**"]
+        "assetScope": ["$APPDATA/**", "$APPLOCALDATA/**", "$RESOURCE/**", "**"]
       },
       "fs": {
         "scope": ["**"]
@@ -36,10 +36,11 @@
         "icons/icon.ico"
       ],
       "identifier": "com.tauri.dev",
-      "targets": "all"
+      "targets": "all",
+      "resources": ["resources/*"]
     },
     "security": {
-      "csp": "default-src 'self'; media-src 'self' asset: https://asset.localhost;"
+      "csp": "default-src 'self'; media-src 'self' asset: https://asset.localhost; img-src 'self' asset: https://asset.localhost"
     },
     "updater": {
       "active": false

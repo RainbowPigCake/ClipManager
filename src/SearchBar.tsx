@@ -10,7 +10,7 @@ export default function SearchBar({ onRefresh }) {
 
   // TODO: remove this. for developing purposes
   useEffect(() => {
-    onRefresh('C:\\files\\LowkeyClips2');
+    onRefresh('D:\\ClipsNvidia\\Valorant');
   }, []);
 
   return (

@@ -6,3 +6,4 @@
 /.vs/ClipManager/v17/.suo
 node_modules
 test/**
+src-tauri/resources/ffmpeg.exe
