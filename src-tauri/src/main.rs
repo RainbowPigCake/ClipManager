@@ -12,11 +12,21 @@ fn get_clip_file_paths(directory: &str) -> Result<Vec<String>, String> {
     return Err(format!("Directory '{}' does not exist or is not a directory", directory));
   }
 
+  const VALID_EXTENSIONS: [&str; 6] = ["mp4", "mkv", "avi", "mov", "webm", "m4v"];
+
   let paths = fs::read_dir(directory).map_err(|err| format!("Error reading directory: {}", err))?;
   let mut clip_paths = Vec::new();
-  for path in paths {
-    clip_paths.push(path.unwrap().path().into_os_string().into_string().unwrap());
+  for entry in paths {
+    let entry = entry.map_err(|err| format!("Error reading entry: {}", err))?;
+    let file_path = entry.path();
+
+    if let Some(ext) = file_path.extension().and_then(|s| s.to_str()) {
+      if VALID_EXTENSIONS.contains(&ext) {
+        clip_paths.push(file_path.to_string_lossy().into_owned());
+      }
+    }
   }
+
   Ok(clip_paths)
 }
 
