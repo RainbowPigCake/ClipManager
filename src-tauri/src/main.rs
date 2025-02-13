@@ -73,7 +73,7 @@ async fn get_thumbnail(app_handle: tauri::AppHandle, video_path: String) -> Resu
         "-vframes",
         "1",
         "-vf",
-        "scale=276:155:flags=lanczos,eq=contrast=1.1:brightness=0:saturation=1.2",
+        "scale=276:155",
         "-s",
         "276x155",
         "-q:v",
