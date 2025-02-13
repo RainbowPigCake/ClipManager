@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { invoke } from '@tauri-apps/api';
+import { convertFileSrc } from '@tauri-apps/api/tauri';
+
 import './index.css';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 
 const maxStrLengthTitle = 31;
 
 export default function Clip({ filePath, handleClickClip }) {
+  const [thumbnailPath, setThumbnailPath] = useState<string | null>(null);
   const parsedPath = filePath.split(/[/\\]/).pop();
 
+  useEffect(() => {
+    invoke('get_thumbnail', {
+      videoPath: filePath
+    })
+      .then((thumbPath: string) => {
+        setThumbnailPath(convertFileSrc(thumbPath));
+      })
+      .catch(console.error);
+  }, [filePath]);
   return (
     <Card
       className="m-4 cursor-pointer"
@@ -15,7 +28,8 @@ export default function Clip({ filePath, handleClickClip }) {
       <CardHeader>
         <img
           className="rounded-md object-scale-down w-[276px] h-[155px] mb-1"
-          src="https://static.wikia.nocookie.net/silly-cat/images/7/78/Melon_Cat_Species_2.png" />
+          // TODO: change fallback thumbnail
+          src={thumbnailPath ?? "https://static.wikia.nocookie.net/silly-cat/images/7/78/Melon_Cat_Species_2.png"} />
       </CardHeader>
       <CardContent>
         <CardTitle>
