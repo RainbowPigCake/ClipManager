@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api';
 import { convertFileSrc } from '@tauri-apps/api/tauri';
-
 import './index.css';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 
