@@ -7,17 +7,36 @@ fn get_clip_file_paths(directory: &str) -> Result<Vec<String>, String> {
   use std::fs;
   use std::path::Path;
 
+  // Validate directory path first
   let dir_path = Path::new(directory);
   if !dir_path.exists() || !dir_path.is_dir() {
     return Err(format!("Directory '{}' does not exist or is not a directory", directory));
   }
 
-  let paths = fs::read_dir(directory).map_err(|err| format!("Error reading directory: {}", err))?;
-  let mut clip_paths = Vec::new();
-  for path in paths {
-    clip_paths.push(path.unwrap().path().into_os_string().into_string().unwrap());
-  }
-  Ok(clip_paths)
+  const VALID_EXTENSIONS: [&str; 6] = ["mp4", "mkv", "avi", "mov", "webm", "m4v"];
+
+  // Use collect with take to limit the number of files processed
+  let video_paths: Vec<String> = fs
+    ::read_dir(directory)
+    .map_err(|err| format!("Error reading directory: {}", err))?
+    .filter_map(|entry| {
+      entry.ok().and_then(|e| {
+        let path = e.path();
+        path
+          .extension()
+          .and_then(|ext| ext.to_str())
+          .and_then(|ext_str| {
+            if VALID_EXTENSIONS.iter().any(|&valid_ext| ext_str.eq_ignore_ascii_case(valid_ext)) {
+              path.to_str().map(String::from)
+            } else {
+              None
+            }
+          })
+      })
+    })
+    .collect();
+
+  Ok(video_paths)
 }
 
 #[tauri::command]
@@ -49,31 +68,29 @@ async fn get_thumbnail(app_handle: tauri::AppHandle, video_path: String) -> Resu
   }
 
   // First, get the duration
-  let duration_output = Command::new(&resource_path)
-    .args(&["-i", &video_path, "-show_entries", "format=duration", "-v", "quiet", "-of", "csv=p=0"])
-    .output()
-    .map_err(|e| format!("Failed to get duration: {}", e))?;
+  // let duration_output = Command::new(&resource_path)
+  //   .args(&["-i", &video_path, "-show_entries", "format=duration", "-v", "quiet", "-of", "csv=p=0"])
+  //   .output()
+  //   .map_err(|e| format!("Failed to get duration: {}", e))?;
 
-  let duration: f64 = String::from_utf8_lossy(&duration_output.stdout)
-    .trim()
-    .parse()
-    .unwrap_or(0.0);
+  // let duration: f64 = String::from_utf8_lossy(&duration_output.stdout)
+  //   .trim()
+  //   .parse()
+  //   .unwrap_or(0.0);
 
   // Choose seek time based on duration
-  let seek_time = if duration < 4.0 { (duration / 2.0).to_string() } else { "4".to_string() };
+  // let seek_time = if duration < 4.0 { (duration / 2.0).to_string() } else { "4".to_string() };
 
   // Use bundled ffmpeg.exe
   let output = Command::new(&resource_path)
     .args(
       &[
-        "-ss",
-        &seek_time,
         "-i",
         &video_path,
         "-vframes",
         "1",
         "-vf",
-        "scale=276:155:flags=lanczos,eq=contrast=1.1:brightness=0:saturation=1.2",
+        "scale=276:155",
         "-s",
         "276x155",
         "-q:v",
