@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Clip from './Clip';
 import SearchBar from './SearchBar';
-import './index.css';
 import './ClipGrid.css';
 import { invoke } from '@tauri-apps/api';
 
