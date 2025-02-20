@@ -1,7 +1,7 @@
 import { Feather, Settings, ArrowLeft } from 'lucide-react';
 import NavBarButton from './NavBarButton';
 
-export default function NavBar({ funcs }) {
+export default function NavBar({ funcs }: any) {
   return (
     <div className="flex flex-col">
       <NavBarButton icon={<Feather className="h-8 w-8"></Feather>} />
@@ -13,7 +13,7 @@ export default function NavBar({ funcs }) {
       <NavBarButton
         icon={<Settings className="h-8 w-8"></Settings>}
         tooltipText="Settings"
-        // TODO: navigate to settings page => onClick={funcs['back']}
+        onClick={funcs['settings']}
       />
     </div>
   );

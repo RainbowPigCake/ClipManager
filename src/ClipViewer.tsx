@@ -12,8 +12,8 @@ import {
 import {
   Play,
   Pause,
-  SkipBack,
-  SkipForward,
+  Redo,
+  Undo,
   Volume2,
   VolumeX,
   Maximize,
@@ -122,7 +122,7 @@ export default function ClipViewer({ clipFilePath }) {
                       size="icon"
                       onClick={() => handleSkip(false)}
                     >
-                      <SkipBack className="h-4 w-4" />
+                      <Undo className="h-4 w-4" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -152,7 +152,7 @@ export default function ClipViewer({ clipFilePath }) {
                       size="icon"
                       onClick={() => handleSkip(true)}
                     >
-                      <SkipForward className="h-4 w-4" />
+                      <Redo className="h-4 w-4" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
