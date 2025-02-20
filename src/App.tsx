@@ -21,6 +21,7 @@ function App() {
   };
 
   const handleSettingsPage = () => {
+    setViewingClipPath(null);
     setIsViewingSettingsPage(true);
   }
 

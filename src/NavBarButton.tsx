@@ -9,7 +9,7 @@ import {
 export default function NavBarButton({
   icon,
   tooltipText = '',
-  onClick = () => {},
+  onClick = () => { },
 }) {
   return tooltipText ? (
     <TooltipProvider>
@@ -29,7 +29,7 @@ export default function NavBarButton({
       </Tooltip>
     </TooltipProvider>
   ) : (
-    <Button className="mx-6 mt-6 h-16 w-16" size={'icon'}>
+    <Button className="mx-6 mt-6 h-16 w-16 rounded-full" size={'icon'}>
       {icon}
     </Button>
   );
