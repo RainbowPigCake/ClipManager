@@ -12,7 +12,7 @@ interface Clip {
 
 const THUMBNAILS_PER_BATCH = 20; // Number of thumbnails to load at once
 
-export default function ClipGrid({ handleClickClip, isVisible }) {
+export default function ClipGrid({ handleClickClip, isVisible }: any) {
   const [clips, setClips] = useState<Clip[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
   const clipGridRef = useRef(null);

@@ -11,10 +11,8 @@ function App() {
   const [isViewingSettingsPage, setIsViewingSettingsPage] = useState(false);
 
   const handleClipClick = (clipName: any) => {
-    if (!viewingClipPath) {
-      setScrollPosition(window.scrollY);
-      setViewingClipPath(clipName);
-    }
+    setScrollPosition(window.scrollY);
+    setViewingClipPath(clipName);
   };
 
   const handleBackViewer = () => {
@@ -23,7 +21,6 @@ function App() {
   };
 
   const handleSettingsPage = () => {
-    setViewingClipPath(null);
     setIsViewingSettingsPage(true);
   }
 
@@ -31,25 +28,32 @@ function App() {
     if (!viewingClipPath) {
       window.scrollTo(0, scrollPosition);
     }
-  }, [viewingClipPath, scrollPosition]);
+  }, [viewingClipPath, isViewingSettingsPage, scrollPosition]);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="flex flex-row bg-background text-foreground">
-        <div className="fixed">
-          <NavBar funcs={{ "back": handleBackViewer, "settings": handleSettingsPage }} />
+      <div className="flex flex-row bg-background text-foreground min-h-screen">
+        <div className="fixed z-50">
+          <NavBar key={`${viewingClipPath}+${isViewingSettingsPage}`} context={{ "viewing": viewingClipPath, "settings": isViewingSettingsPage }} funcs={{ "back": handleBackViewer, "settings": handleSettingsPage }} />
         </div>
-        {!!isViewingSettingsPage && <Settings />}
-        {!!viewingClipPath && (
-          <div className="ml-24">
-            <ClipViewer clipFilePath={viewingClipPath} />
-          </div>
-        )}
-        <div className="flex-grow ml-24">
+
+        <div className="flex-grow ml-24 relative">
           <ClipGrid
             handleClickClip={handleClipClick}
-            isVisible={!viewingClipPath}
+            isVisible={!viewingClipPath && !isViewingSettingsPage}
           />
+
+          {isViewingSettingsPage && (
+            <div className="fixed inset-0 z-40 ml-32 bg-background">
+              <Settings />
+            </div>
+          )}
+
+          {viewingClipPath && (
+            <div className="fixed inset-0 z-30 ml-32">
+              <ClipViewer clipFilePath={viewingClipPath} />
+            </div>
+          )}
         </div>
       </div>
     </ThemeProvider>
