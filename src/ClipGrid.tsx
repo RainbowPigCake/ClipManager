@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Clip from './Clip';
 import SearchBar from './SearchBar';
-import './index.css';
 import './ClipGrid.css';
 import { invoke } from '@tauri-apps/api';
 
@@ -11,9 +10,9 @@ interface Clip {
   loadThumbnail: boolean;
 }
 
-const THUMBNAILS_PER_BATCH = 100; // Number of thumbnails to load at once
+const THUMBNAILS_PER_BATCH = 20; // Number of thumbnails to load at once
 
-export default function ClipGrid({ handleClickClip, isVisible }) {
+export default function ClipGrid({ handleClickClip, isVisible }: any) {
   const [clips, setClips] = useState<Clip[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
   const clipGridRef = useRef(null);
