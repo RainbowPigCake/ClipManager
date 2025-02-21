@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { convertFileSrc } from '@tauri-apps/api/tauri';
+import { convertFileSrc } from '@tauri-apps/api/core';
 import ReactPlayer from 'react-player';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
