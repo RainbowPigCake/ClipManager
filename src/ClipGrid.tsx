@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import Clip from './Clip';
 import SearchBar from './SearchBar';
 import './ClipGrid.css';
-import { invoke } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api/core';
 
 interface Clip {
   id: string;
