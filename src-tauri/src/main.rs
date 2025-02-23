@@ -107,6 +107,7 @@ async fn get_thumbnail(app_handle: tauri::AppHandle, video_path: String) -> Resu
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![get_clip_file_paths, get_thumbnail])
