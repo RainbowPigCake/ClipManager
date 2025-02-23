@@ -2,6 +2,16 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
+use std::fs;
+use serde::{Deserialize, Serialize};
+use tauri::Manager;
+
+#[derive(Serialize, Deserialize)]
+struct AppSettings {
+    clip_folder_path: String,
+    volume: f32,
+}
+
 #[tauri::command]
 fn get_clip_file_paths(directory: &str) -> Result<Vec<String>, String> {
     use std::fs;
@@ -47,7 +57,6 @@ fn get_clip_file_paths(directory: &str) -> Result<Vec<String>, String> {
 async fn get_thumbnail(app_handle: tauri::AppHandle, video_path: String) -> Result<String, String> {
     use std::path::Path;
     use std::process::Command;
-    use tauri::Manager;
 
     let app_local_data = app_handle
         .path()
@@ -105,12 +114,46 @@ async fn get_thumbnail(app_handle: tauri::AppHandle, video_path: String) -> Resu
     Ok(thumb_path.to_str().unwrap().to_string())
 }
 
+#[tauri::command]
+fn read_settings(app_handle: tauri::AppHandle) -> Result<AppSettings, String> {
+    let settings_path = app_handle
+        .path()
+        .app_local_data_dir()
+        .map_err(|_| "Could not get app local data dir")?
+        .join("settings.json");
+
+    if !settings_path.exists() {
+        let default_settings = AppSettings {
+            clip_folder_path: String::new(),
+            volume: 0.5,
+        };
+        fs::write(&settings_path, serde_json::to_string(&default_settings).unwrap())
+            .map_err(|e| e.to_string())?;
+        return Ok(default_settings);
+    }
+
+    let settings_data = fs::read_to_string(&settings_path).map_err(|e| e.to_string())?;
+    serde_json::from_str(&settings_data).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn write_settings(app_handle: tauri::AppHandle, settings: AppSettings) -> Result<(), String> {
+    let settings_path = app_handle
+        .path()
+        .app_local_data_dir()
+        .map_err(|_| "Could not get app local data dir")?
+        .join("settings.json");
+
+    fs::write(&settings_path, serde_json::to_string(&settings).unwrap())
+        .map_err(|e| e.to_string())
+}
+
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![get_clip_file_paths, get_thumbnail])
+        .invoke_handler(tauri::generate_handler![get_clip_file_paths, get_thumbnail, read_settings, write_settings])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

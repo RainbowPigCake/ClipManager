@@ -12,19 +12,19 @@ interface Clip {
 
 const THUMBNAILS_PER_BATCH = 20; // Number of thumbnails to load at once
 
-export default function ClipGrid({ handleClickClip, isVisible }: any) {
+export default function ClipGrid({ handleClickClip, isVisible, clipFolderPath }: any) {
   const [clips, setClips] = useState<Clip[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
 
-  const refreshClips = async (dir: string) => {
+  const refreshClips = async () => {
     // TODO: Remove log
     console.log('Refreshing Clips!');
     try {
       setClips([]);
       setLoadedCount(0);
-
+      console.log(clipFolderPath)
       const paths = await invoke<string[]>('get_clip_file_paths', {
-        directory: dir,
+        directory: clipFolderPath,
       });
 
       // Initialize all clips with loadThumbnail=false
@@ -41,7 +41,10 @@ export default function ClipGrid({ handleClickClip, isVisible }: any) {
     }
   };
 
-  // Progressive loading effect
+  useEffect(() => {
+    refreshClips();
+  }, [])
+
   useEffect(() => {
     if (clips.length > 0 && loadedCount < clips.length) {
       const timer = setTimeout(() => {
@@ -55,7 +58,7 @@ export default function ClipGrid({ handleClickClip, isVisible }: any) {
           });
         });
         setLoadedCount(prev => Math.min(prev + THUMBNAILS_PER_BATCH, clips.length));
-      }, 100); // Small delay between batches
+      }, 100);
 
       return () => clearTimeout(timer);
     }

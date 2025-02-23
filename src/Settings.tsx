@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FormDescription } from "@/components/ui/form";
 import { Button } from '@/components/ui/button';
-import { open } from '@tauri-apps/plugin-dialog';
 
 export default function Settings({ handleChooseFolder }) {
     const [clipFolderPath, setClipFolderPath] = useState("");

@@ -1,16 +1,33 @@
 import { useState, useEffect } from 'react';
+import { BaseDirectory } from '@tauri-apps/plugin-fs';
 import ClipGrid from './ClipGrid';
 import ClipViewer from './ClipViewer';
 import { ThemeProvider } from '@/components/theme-provider';
 import NavBar from './NavBar';
 import Settings from './Settings';
 import SearchPanel from './SearchPanel'
+import { invoke } from '@tauri-apps/api/core';
+import { open } from '@tauri-apps/plugin-dialog';
 
 function App() {
-  // TODO: grab user app settings on startup like volume and folder path
   const [viewingClipPath, setViewingClipPath] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isViewingSettingsPage, setIsViewingSettingsPage] = useState(false);
+  const [clipFolderPath, setClipFolderPath] = useState('');
+  const [volume, setVolume] = useState(0.5);
+
+  useEffect(() => {
+    async function loadSettings() {
+      try {
+        const settings: any = await invoke('read_settings');
+        setClipFolderPath(settings.clip_folder_path);
+        setVolume(settings.volume);
+      } catch (error) {
+        console.error('Failed to load settings:', error);
+      }
+    }
+    loadSettings();
+  }, []);
 
   const handleClipClick = (clipName: any) => {
     setScrollPosition(window.scrollY);
@@ -32,12 +49,14 @@ function App() {
       multiple: false,
       directory: true,
     });
-    if (directory !== null) {
-      setClipFolderPath(directory)
-      // TODO: pass over to clip grid
+    if (directory !== null && directory !== clipFolderPath) {
+      setClipFolderPath(directory);
+      console.log(clipFolderPath)
+      await invoke('write_settings', { settings: { clip_folder_path: directory, volume } });
+
+
     }
   }
-
 
   useEffect(() => {
     if (!viewingClipPath) {
@@ -55,8 +74,10 @@ function App() {
 
         <div className="flex-grow ml-24 relative">
           <ClipGrid
+            key={clipFolderPath}
             handleClickClip={handleClipClick}
             isVisible={!viewingClipPath && !isViewingSettingsPage}
+            clipFolderPath={clipFolderPath}
           />
 
           {isViewingSettingsPage && (

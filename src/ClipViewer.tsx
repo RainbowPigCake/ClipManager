@@ -19,6 +19,7 @@ import {
   Maximize,
   Minimize
 } from 'lucide-react';
+import { invoke } from '@tauri-apps/api/core';
 
 export default function ClipViewer({ clipFilePath }) {
   const [playing, setPlaying] = useState(true);
@@ -30,6 +31,18 @@ export default function ClipViewer({ clipFilePath }) {
   const playerRef = useRef<ReactPlayer>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    async function loadVolume() {
+      try {
+        const settings: any = await invoke('read_settings');
+        setVolume(settings.volume);
+      } catch (error) {
+        console.error('Failed to load volume:', error);
+      }
+    }
+    loadVolume();
+  }, []);
+
   const clipURI = convertFileSrc(decodeURI(clipFilePath));
   const fileName = decodeURI(clipFilePath).split(/[/\\]/).pop();
 
@@ -37,8 +50,10 @@ export default function ClipViewer({ clipFilePath }) {
     setPlaying(!playing);
   };
 
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(parseFloat(e.target.value));
+  const handleVolumeChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    await invoke('write_settings', { settings: { clip_folder_path: clipFilePath, volume: newVolume } });
   };
 
   const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,9 +100,13 @@ export default function ClipViewer({ clipFilePath }) {
     }
   };
 
+  const handleVideoClick = () => {
+    setPlaying(!playing);
+  };
+
   return (
     <div className="w-full max-w-[90vw] mx-auto my-4 p-4" ref={containerRef}>
-      <div className="relative group">
+      <div className="relative group" onClick={handleVideoClick}>
         <ReactPlayer
           ref={playerRef}
           url={clipURI}
@@ -104,7 +123,7 @@ export default function ClipViewer({ clipFilePath }) {
         />
 
         {/* Custom Controls */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-4 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+        <div className=" absolute bottom-0 left-0 right-0 bg-black/60 p-4 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
           {/* Progress Bar */}
           <input
             type="range"
