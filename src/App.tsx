@@ -4,8 +4,10 @@ import ClipViewer from './ClipViewer';
 import { ThemeProvider } from '@/components/theme-provider';
 import NavBar from './NavBar';
 import Settings from './Settings';
+import SearchPanel from './SearchPanel'
 
 function App() {
+  // TODO: grab user app settings on startup like volume and folder path
   const [viewingClipPath, setViewingClipPath] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isViewingSettingsPage, setIsViewingSettingsPage] = useState(false);
@@ -25,6 +27,18 @@ function App() {
     setIsViewingSettingsPage(true);
   }
 
+  async function handleChooseFolder() {
+    const directory = await open({
+      multiple: false,
+      directory: true,
+    });
+    if (directory !== null) {
+      setClipFolderPath(directory)
+      // TODO: pass over to clip grid
+    }
+  }
+
+
   useEffect(() => {
     if (!viewingClipPath) {
       window.scrollTo(0, scrollPosition);
@@ -33,6 +47,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <SearchPanel />
       <div className="flex flex-row bg-background text-foreground min-h-screen">
         <div className="fixed z-50">
           <NavBar key={`${viewingClipPath}+${isViewingSettingsPage}`} context={{ "viewing": viewingClipPath, "settings": isViewingSettingsPage }} funcs={{ "back": handleBackViewer, "settings": handleSettingsPage }} />
@@ -46,7 +61,7 @@ function App() {
 
           {isViewingSettingsPage && (
             <div className="fixed inset-0 z-40 ml-32 bg-background">
-              <Settings />
+              <Settings handleChooseFolder={handleChooseFolder} />
             </div>
           )}
 

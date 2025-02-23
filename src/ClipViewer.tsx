@@ -22,6 +22,7 @@ import {
 
 export default function ClipViewer({ clipFilePath }) {
   const [playing, setPlaying] = useState(true);
+  const [prevPlaying, setPrevPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [played, setPlayed] = useState(0);
   const [seeking, setSeeking] = useState(false);
@@ -42,14 +43,20 @@ export default function ClipViewer({ clipFilePath }) {
 
   const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlayed(parseFloat(e.target.value));
+    if (playerRef.current) {
+      playerRef.current.seekTo(parseFloat((e.target as HTMLInputElement).value));
+    }
   };
 
-  const handleSeekMouseDown = () => {
+  const handleSeekMouseDown = (e: React.PointerEvent<HTMLInputElement>) => {
+    setPrevPlaying(playing);
     setSeeking(true);
+    setPlaying(false);
   };
 
-  const handleSeekMouseUp = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleSeekMouseUp = (e: React.PointerEvent<HTMLInputElement>) => {
     setSeeking(false);
+    setPlaying(prevPlaying);
     if (playerRef.current) {
       playerRef.current.seekTo(parseFloat((e.target as HTMLInputElement).value));
     }
@@ -78,12 +85,8 @@ export default function ClipViewer({ clipFilePath }) {
     }
   };
 
-  useEffect(() => {
-    console.log('Rendering Clip Viewer!');
-  }, []);
-
   return (
-    <Card className="w-full max-w-[90vw] mx-auto my-4 p-4" ref={containerRef}>
+    <div className="w-full max-w-[90vw] mx-auto my-4 p-4" ref={containerRef}>
       <div className="relative group">
         <ReactPlayer
           ref={playerRef}
@@ -95,6 +98,9 @@ export default function ClipViewer({ clipFilePath }) {
           style={{ aspectRatio: '16/9' }}
           onProgress={handleProgress}
           progressInterval={100}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onEnded={() => setPlaying(false)}
         />
 
         {/* Custom Controls */}
@@ -109,7 +115,8 @@ export default function ClipViewer({ clipFilePath }) {
             onMouseDown={handleSeekMouseDown}
             onChange={handleSeekChange}
             onMouseUp={handleSeekMouseUp}
-            className="w-full h-1 mb-4 accent-primary"
+            onDrag={(e) => { console.log(e) }}
+            className="w-full  mb-4 accent-primary"
           />
 
           <div className="flex items-center justify-between">
@@ -195,6 +202,6 @@ export default function ClipViewer({ clipFilePath }) {
       <div className="mt-4 text-lg font-semibold text-foreground">
         {fileName}
       </div>
-    </Card>
+    </div>
   );
 }
