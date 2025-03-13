@@ -3,4 +3,4 @@ An app that I am working on that will replace apps like medal.tv or supplement O
 
 # Tech Stack
 * **Backend:** Tauri and Rust for performance and memory purposes 🦀
-* **Frontend:** React/Typescript 
+* **Frontend:** React, TypeScript, and Tailwind 
